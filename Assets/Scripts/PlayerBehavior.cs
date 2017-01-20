@@ -11,13 +11,23 @@ public class PlayerBehavior : MonoBehaviour
     public GameObject Skin;
 	public GameObject ParticleSystem;
     public float Speed = 10;
+	private float ParticleTimer=0;
+	
     void Start()
     {
 
     }
     // Update is called once per frame
+	
     void Update()
     {
+		if(ParticleSystem.GetComponent<ParticleSystem>().isPlaying){
+			ParticleTimer+=Time.deltaTime;
+		}
+		if(ParticleTimer/3>3){
+			ParticleSystem.GetComponent<ParticleSystem>().Stop();
+			ParticleTimer = 0;
+		}
         var mouse = Input.mousePosition;
         var screenPoint = Camera.main.WorldToScreenPoint(transform.localPosition);
         var offset = new Vector2(mouse.x - screenPoint.x, mouse.y - screenPoint.y);
@@ -26,6 +36,7 @@ public class PlayerBehavior : MonoBehaviour
         if (Input.GetAxis("Fire1") == 1)
         {
 			ParticleSystem.GetComponent<ParticleSystem>().Play();
+
             Light.GetComponent<Animator>().SetTrigger("CastLight");
             Skin.GetComponent<Animator>().SetTrigger("CastLight");
         }
