@@ -19,7 +19,7 @@ public class PlayerBehavior : MonoBehaviour
     private List<ObstacleTypeEnum> Powerups = new List<ObstacleTypeEnum>();
     void Start()
     {
-
+        
     }
     // Update is called once per frame
 
@@ -46,7 +46,14 @@ public class PlayerBehavior : MonoBehaviour
             {
                 try
                 {
-                    hit.transform.gameObject.GetComponent<ObstacleBehavior>().PrepareForDestruction();
+                    var particleType = Spotparticle.GetComponent<ParticleBehavior>();
+                    var obstacleType = hit.transform.gameObject.GetComponent<ObstacleBehavior>().ObstacleType;
+                    if (CanDestroy(obstacleType))
+                    {
+                        Spotparticle.GetComponent<ParticleBehavior>().Destroys = hit.transform.gameObject.GetComponent<ObstacleBehavior>().ObstacleType;
+
+                        hit.transform.gameObject.GetComponent<ObstacleBehavior>().PrepareForDestruction();
+                    }
                     //Debug.Log(hit.transform.gameObject);
                 }
                 catch (Exception ex)

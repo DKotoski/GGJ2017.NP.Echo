@@ -2,32 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ObstacleTypeEnum {
-	Red,
-	Yellow,
-	Blue,
-	Green,
-	Purple,
-	Orange,
-	White,
-	Black
+public enum ObstacleTypeEnum
+{
+    Red,
+    Yellow,
+    Blue,
+    Green,
+    Purple,
+    Orange,
+    White,
+    Black
 }
 public class ObstacleBehavior : MonoBehaviour
 {
 
     // Use this for initialization
-	public ObstacleTypeEnum ObstacleType = ObstacleTypeEnum.Black;
+    public ObstacleTypeEnum ObstacleType = ObstacleTypeEnum.Black;
     public bool WillBeDestroyed = false;
 
     public GameObject ParticleSystem;
 
-	public List<Color> Colors;
+    public List<Color> Colors;
     void Start()
     {
-		ParticleSystem = GameObject.Find("Spotlight Particle");
-		var meshRenderer = GetComponent<MeshRenderer>();
-		var x = meshRenderer.materials[0];//. = Materials[(int)ObstacleType];
-		x.color = Colors[(int)ObstacleType];
+        ParticleSystem = GameObject.Find("Spotlight Particle");
+        var meshRenderer = GetComponent<MeshRenderer>();
+        var x = meshRenderer.materials[0];//. = Materials[(int)ObstacleType];
+        x.color = Colors[(int)ObstacleType];
     }
 
     // Update is called once per frame
@@ -38,8 +39,10 @@ public class ObstacleBehavior : MonoBehaviour
 
     public void PrepareForDestruction()
     {
-		if(ParticleSystem.GetComponent<ParticleBehavior>().CanDestroy(ObstacleType))
-        WillBeDestroyed = true;
+        if (ParticleSystem.GetComponent<ParticleBehavior>().CanDestroy(ObstacleType))
+        {
+            WillBeDestroyed = true;
+        }
     }
 
     public void Destroy()
