@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -40,7 +41,19 @@ public class PlayerBehavior : MonoBehaviour
         {
             Spotlight.GetComponent<Animator>().SetTrigger("CastLight");
             Spotparticle.GetComponent<ParticleSystem>().Play();
-
+            
+            // RaycastHit hit;
+            // Ray ray = new Ray(transform.position,transform.forward);
+            // if(Physics.Raycast(ray,out hit,8f)){
+            //     try{
+            //         hit.transform.gameObject.GetComponent<ObstacleBehavior>().PrepareForDestruction();
+            //          Debug.Log(hit.transform.gameObject);
+            //     }
+            //     catch(Exception ex){
+                    
+            //     }
+               
+            // }
         }
 
     }
@@ -51,6 +64,7 @@ public class PlayerBehavior : MonoBehaviour
         float movey = 0f;
         movex = Input.GetAxis("Horizontal");
         movey = Input.GetAxis("Vertical");
+        Debug.Log(movex+" "+movey);
         GetComponent<Rigidbody>().velocity = new Vector3(movex * Speed, 0, movey * Speed);
     }
 

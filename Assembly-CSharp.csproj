@@ -48,6 +48,8 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\CameraBehavior.cs" />
      <Compile Include="Assets\Scripts\LightParticleController.cs" />
+     <Compile Include="Assets\Scripts\ObstacleBehavior.cs" />
+     <Compile Include="Assets\Scripts\ParticleBehavior.cs" />
      <Compile Include="Assets\Scripts\PlayerBehavior.cs" />
      <Compile Include="Assets\Scripts\WaveAnimationController.cs" />
  <Reference Include="UnityEngine.UI">
