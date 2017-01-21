@@ -19,7 +19,7 @@ public class PlayerBehavior : MonoBehaviour
     public List<ObstacleTypeEnum> Powerups = new List<ObstacleTypeEnum>();
     void Start()
     {
-        
+        Skin.GetComponent<Animator>().SetTrigger("IddleFreq");
     }
     // Update is called once per frame
 
@@ -34,12 +34,13 @@ public class PlayerBehavior : MonoBehaviour
             Light.GetComponent<Animator>().SetTrigger("CastLight");
             Skin.GetComponent<Animator>().SetTrigger("CastLight");
             Skin.GetComponent<Animator>().SetTrigger("LowFreq");
+            Skin.GetComponent<Animator>().SetTrigger("LowFreq");
         }
         if (Input.GetAxis("Fire2") == 1)
         {
             Spotlight.GetComponent<Animator>().SetTrigger("CastLight");
             Spotparticle.GetComponent<ParticleSystem>().Play();
-
+            Skin.GetComponent<Animator>().SetTrigger("HighFreq");
             RaycastHit hit;
             Ray ray = new Ray(transform.position, transform.forward);
             if (Physics.Raycast(ray, out hit, 8f))
