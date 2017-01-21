@@ -16,7 +16,7 @@ public class PlayerBehavior : MonoBehaviour
     private float ParticleTimer = 0;
     private float SpotParticleTimer = 0;
 
-    //private List<Powerup>
+    private List<ObstacleTypeEnum> Powerups = new List<ObstacleTypeEnum>();
     void Start()
     {
 
@@ -98,4 +98,54 @@ public class PlayerBehavior : MonoBehaviour
             SpotParticleTimer = 0;
         }
     }
+
+    bool CanDestroy(ObstacleTypeEnum type)
+    {
+
+        if (Powerups.Contains(type))
+        {
+            Powerups.Remove(type);
+            return true;
+        }
+
+        switch (type)
+        {
+            case ObstacleTypeEnum.Green:
+                if (Powerups.Contains(ObstacleTypeEnum.Blue) && Powerups.Contains(ObstacleTypeEnum.Yellow))
+                {
+                    Powerups.Remove(ObstacleTypeEnum.Blue);
+                    Powerups.Remove(ObstacleTypeEnum.Yellow);
+                    return true;
+                }
+                break;
+            case ObstacleTypeEnum.Purple:
+                if (Powerups.Contains(ObstacleTypeEnum.Blue) && Powerups.Contains(ObstacleTypeEnum.Red))
+                {
+                    Powerups.Remove(ObstacleTypeEnum.Blue);
+                    Powerups.Remove(ObstacleTypeEnum.Red);
+                    return true;
+                }
+                break;
+            case ObstacleTypeEnum.Orange:
+                if (Powerups.Contains(ObstacleTypeEnum.Yellow) && Powerups.Contains(ObstacleTypeEnum.Red))
+                {
+                    Powerups.Remove(ObstacleTypeEnum.Yellow);
+                    Powerups.Remove(ObstacleTypeEnum.Red);
+                    return true;
+                }
+                break;
+            case ObstacleTypeEnum.White:
+                if (Powerups.Contains(ObstacleTypeEnum.Yellow) && Powerups.Contains(ObstacleTypeEnum.Red) && Powerups.Contains(ObstacleTypeEnum.Blue))
+                {
+                    Powerups.Remove(ObstacleTypeEnum.Yellow);
+                    Powerups.Remove(ObstacleTypeEnum.Red);
+                    Powerups.Remove(ObstacleTypeEnum.Blue);
+                    return true;
+                }
+                break;
+            default: return false;
+        }
+        return false;
+    }
 }
+
