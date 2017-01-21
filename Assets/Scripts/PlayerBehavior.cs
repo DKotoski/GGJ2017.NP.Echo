@@ -25,11 +25,7 @@ public class PlayerBehavior : MonoBehaviour
     void Update()
     {
         Timers();
-        var mouse = Input.mousePosition;
-        var screenPoint = Camera.main.WorldToScreenPoint(transform.localPosition);
-        var offset = new Vector2(mouse.x - screenPoint.x, mouse.y - screenPoint.y);
-        var angle = Mathf.Atan2(offset.x, offset.y) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, angle, 0);
+
         if (Input.GetAxis("Fire1") == 1)
         {
             ParticleSystem.GetComponent<ParticleSystem>().Play();
@@ -41,7 +37,7 @@ public class PlayerBehavior : MonoBehaviour
         {
             Spotlight.GetComponent<Animator>().SetTrigger("CastLight");
             Spotparticle.GetComponent<ParticleSystem>().Play();
-            
+
             // RaycastHit hit;
             // Ray ray = new Ray(transform.position,transform.forward);
             // if(Physics.Raycast(ray,out hit,8f)){
@@ -50,9 +46,9 @@ public class PlayerBehavior : MonoBehaviour
             //          Debug.Log(hit.transform.gameObject);
             //     }
             //     catch(Exception ex){
-                    
+
             //     }
-               
+
             // }
         }
 
@@ -60,11 +56,16 @@ public class PlayerBehavior : MonoBehaviour
 
     void FixedUpdate()
     {
+        var mouse = Input.mousePosition;
+        var screenPoint = Camera.main.WorldToScreenPoint(transform.localPosition);
+        var offset = new Vector2(mouse.x - screenPoint.x, mouse.y - screenPoint.y);
+        var angle = Mathf.Atan2(offset.x, offset.y) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, angle, 0);
         float movex = 0f;
         float movey = 0f;
         movex = Input.GetAxis("Horizontal");
         movey = Input.GetAxis("Vertical");
-        Debug.Log(movex+" "+movey);
+        // Debug.Log(movex+" "+movey);
         GetComponent<Rigidbody>().velocity = new Vector3(movex * Speed, 0, movey * Speed);
     }
 

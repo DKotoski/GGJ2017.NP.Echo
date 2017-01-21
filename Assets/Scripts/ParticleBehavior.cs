@@ -15,16 +15,5 @@ public class ParticleBehavior : MonoBehaviour {
 		
 	}
 
-	/// <summary>
-	/// OnParticleCollision is called when a particle hits a collider.
-	/// </summary>
-	/// <param name="other">The GameObject hit by the particle.</param>
-	void OnParticleCollision(GameObject other)
-	{
-		try{
-			other.GetComponent<ObstacleBehavior>().Destroy();
-		}catch(Exception ex){
-			
-		}
-	}
+	
 }
