@@ -33,6 +33,7 @@ public class PlayerBehavior : MonoBehaviour
 
             Light.GetComponent<Animator>().SetTrigger("CastLight");
             Skin.GetComponent<Animator>().SetTrigger("CastLight");
+            Skin.GetComponent<Animator>().SetTrigger("LowFreq");
         }
         if (Input.GetAxis("Fire2") == 1)
         {
@@ -40,13 +41,19 @@ public class PlayerBehavior : MonoBehaviour
             Spotparticle.GetComponent<ParticleSystem>().Play();
 
             RaycastHit hit;
-            Ray ray = new Ray(transform.position,transform.forward);
-            if(Physics.Raycast(ray,out hit,8f)){
-                try{
+            Ray ray = new Ray(transform.position, transform.forward);
+            if (Physics.Raycast(ray, out hit, 8f))
+            {
+                try
+                {
                     hit.transform.gameObject.GetComponent<ObstacleBehavior>().PrepareForDestruction();
-                     //Debug.Log(hit.transform.gameObject);
+                    //Debug.Log(hit.transform.gameObject);
                 }
-                catch(Exception ex){
+                catch (Exception ex)
+                {
+
+                    Skin.GetComponent<Animator>().SetTrigger("HighFreq");
+
 
                 }
 
