@@ -2,36 +2,63 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObstacleBehavior : MonoBehaviour {
+public enum ObstacleTypeEnum {
+	Red,
+	Yellow,
+	Blue,
+	Green,
+	Purple,
+	Orange,
+	White,
+	Black
+}
+public class ObstacleBehavior : MonoBehaviour
+{
 
-	// Use this for initialization
-	public bool WillBeDestroyed = false;
+    // Use this for initialization
+	public ObstacleTypeEnum ObstacleType = ObstacleTypeEnum.Black;
+    public bool WillBeDestroyed = false;
 
-	public GameObject ParticleSystem;
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public GameObject ParticleSystem;
 
-	public void PrepareForDestruction(){
-		WillBeDestroyed = true;
-	}
+	public List<Color> Colors;
+    void Start()
+    {
+		ParticleSystem = GameObject.Find("Spotlight Particle");
+		var meshRenderer = GetComponent<MeshRenderer>();
+		var x = meshRenderer.materials[0];//. = Materials[(int)ObstacleType];
+		x.color = Colors[(int)ObstacleType];
+    }
 
-	public void Destroy(){
-		if(WillBeDestroyed) GameObject.Destroy(this);
-	}
+    // Update is called once per frame
+    void Update()
+    {
 
-	/// <summary>
-	/// OnParticleCollision is called when a particle hits a collider.
-	/// </summary>
-	/// <param name="other">The GameObject hit by the particle.</param>
-	void OnParticleCollision(GameObject other)
-	{
-		Debug.Log(other);
-	}
+    }
+
+    public void PrepareForDestruction()
+    {
+		if(ParticleSystem.GetComponent<ParticleBehavior>().CanDestroy(ObstacleType))
+        WillBeDestroyed = true;
+    }
+
+    public void Destroy()
+    {
+        if (WillBeDestroyed) GameObject.Destroy(gameObject);
+    }
+
+    /// <summary>
+    /// OnParticleCollision is called when a particle hits a collider.
+    /// </summary>
+    /// <param name="other">The GameObject hit by the particle.</param>
+    void OnParticleCollision(GameObject other)
+    {
+        ParticleSystem part = ParticleSystem.GetComponent<ParticleSystem>();
+        List<ParticleCollisionEvent> collisionEvents = new List<ParticleCollisionEvent>();
+        int numCollisionEvents = part.GetCollisionEvents(other, collisionEvents);
+        Debug.Log(numCollisionEvents);
+        Debug.Log(collisionEvents.Count);
+        if (collisionEvents.Count > 50) Destroy();
+    }
 
 }
