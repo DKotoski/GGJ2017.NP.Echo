@@ -47,7 +47,9 @@ public class ObstacleBehavior : MonoBehaviour
 
     public void Destroy()
     {
-        if (WillBeDestroyed) GameObject.Destroy(gameObject);
+        if (WillBeDestroyed) { 
+            GetComponent<Rigidbody>().useGravity = true;
+            GameObject.Destroy(gameObject, 5); }
     }
 
     /// <summary>

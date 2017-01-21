@@ -16,7 +16,7 @@ public class PlayerBehavior : MonoBehaviour
     private float ParticleTimer = 0;
     private float SpotParticleTimer = 0;
 
-    private List<ObstacleTypeEnum> Powerups = new List<ObstacleTypeEnum>();
+    public List<ObstacleTypeEnum> Powerups = new List<ObstacleTypeEnum>();
     void Start()
     {
         
