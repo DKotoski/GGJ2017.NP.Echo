@@ -11,6 +11,7 @@ public class CameraBehavior : MonoBehaviour {
 	void Start () {
 		target = Target.GetComponent<Transform>();
 		 transform.position = new Vector3(target.position.x,transform.position.y,transform.position.z);
+		 GetComponent<AudioSource>().volume = 0.25f;
         // transform.rotation = target.rotation;
 	}
 	
