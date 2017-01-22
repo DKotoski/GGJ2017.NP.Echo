@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class PlayerBehavior : MonoBehaviour
 {
 
     // Use this for initialization
+    public GameObject MenuUI;
+    public GameObject InstructionsUI;
+    public GameObject IntroAnimation;
     public GameObject Light;
     public GameObject Spotlight;
     public GameObject Skin;
@@ -15,17 +21,30 @@ public class PlayerBehavior : MonoBehaviour
     public float Speed = 10;
     private float ParticleTimer = 0;
     private float SpotParticleTimer = 0;
-
     public List<ObstacleTypeEnum> Powerups = new List<ObstacleTypeEnum>();
+
+    //UI
+    public GameObject RedUI;
+    public GameObject YellowUI;
+    public GameObject BlueUI;
+    //end UI
+    private bool CanPlay;
     void Start()
     {
+        CanPlay = false;
         Skin.GetComponent<Animator>().SetTrigger("IddleFreq");
+        ResetCollectablesUI();
     }
     // Update is called once per frame
 
     void Update()
     {
         Timers();
+        if (!CanPlay)
+        {
+            return;
+        }
+        
 
         if (Input.GetAxis("Fire1") == 1)
         {
@@ -52,7 +71,7 @@ public class PlayerBehavior : MonoBehaviour
                     if (CanDestroy(obstacleType))
                     {
                         Spotparticle.GetComponent<ParticleBehavior>().Destroys = hit.transform.gameObject.GetComponent<ObstacleBehavior>().ObstacleType;
-
+                        ResetCollectablesUI();
                         hit.transform.gameObject.GetComponent<ObstacleBehavior>().PrepareForDestruction();
                     }
                     //Debug.Log(hit.transform.gameObject);
@@ -72,6 +91,14 @@ public class PlayerBehavior : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!CanPlay)
+        {
+            if(!IntroAnimation.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Intro") && animationPlaying){
+                IntroAnimation.SetActive(false);
+                
+            }
+            return;
+        }
         var mouse = Input.mousePosition;
         var screenPoint = Camera.main.WorldToScreenPoint(transform.localPosition);
         var offset = new Vector2(mouse.x - screenPoint.x, mouse.y - screenPoint.y);
@@ -84,9 +111,16 @@ public class PlayerBehavior : MonoBehaviour
         //Debug.Log(movex+" "+movey);
         GetComponent<Rigidbody>().velocity = new Vector3(movex * Speed, 0, movey * Speed);
     }
-
+    bool animationPlaying = false;
+    double AnimatorTimer = 0;
     void Timers()
     {
+        if(AnimatorTimer>1){
+            animationPlaying = true;
+        }
+        if(!animationPlaying){
+            AnimatorTimer += Time.deltaTime;
+        }
         if (ParticleSystem.GetComponent<ParticleSystem>().isPlaying)
         {
             ParticleTimer += Time.deltaTime;
@@ -154,6 +188,85 @@ public class PlayerBehavior : MonoBehaviour
             default: return false;
         }
         return false;
+    }
+
+    /// <summary>
+    /// OnCollisionEnter is called when this collider/rigidbody has begun
+    /// touching another rigidbody/collider.
+    /// </summary>
+    /// <param name="other">The Collision data associated with this collision.</param>
+    void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "Collectable")
+        {
+            var collectableType = other.gameObject.GetComponentInChildren<CollectableSkinController>().collectableType;
+            Powerups.Add(collectableType);
+            ResetCollectablesUI();
+            GameObject.Destroy(other.gameObject);
+        }
+    }
+
+    void ResetCollectablesUI()
+    {
+
+        var redText = RedUI.GetComponent<Text>();
+        var yellowText = YellowUI.GetComponent<Text>();
+        var blueText = BlueUI.GetComponent<Text>();
+
+        var countedPowerups = Powerups.GroupBy(x => x);
+        Debug.Log(countedPowerups.Where(x => x.Key == ObstacleTypeEnum.Red).Count());
+        Debug.Log(countedPowerups.Where(x => x.Key == ObstacleTypeEnum.Yellow).Count());
+        Debug.Log(countedPowerups.Where(x => x.Key == ObstacleTypeEnum.Blue).Count());
+
+        if (countedPowerups.Where(x => x.Key == ObstacleTypeEnum.Red).Count() == 0)
+        {
+            RedUI.SetActive(false);
+        }
+        else
+        {
+            redText.text = (countedPowerups.FirstOrDefault(x => x.Key == ObstacleTypeEnum.Red).Count() + "x");
+
+            RedUI.SetActive(true);
+        }
+        if (countedPowerups.Where(x => x.Key == ObstacleTypeEnum.Blue).Count() == 0)
+        {
+
+            BlueUI.SetActive(false);
+        }
+        else
+        {
+            blueText.text = (countedPowerups.FirstOrDefault(x => x.Key == ObstacleTypeEnum.Blue).Count() + "x");
+
+            BlueUI.SetActive(true);
+        }
+        if (countedPowerups.Where(x => x.Key == ObstacleTypeEnum.Yellow).Count() == 0)
+        {
+            YellowUI.SetActive(false);
+        }
+        else
+        {
+            yellowText.text = (countedPowerups.FirstOrDefault(x => x.Key == ObstacleTypeEnum.Yellow).Count() + "x");
+
+            YellowUI.SetActive(true);
+        }
+    }
+
+    public void Play()
+    {
+        CanPlay = true;
+        MenuUI.SetActive(false);
+    }
+
+    public void Instructions()
+    {
+        InstructionsUI.SetActive(true);
+        MenuUI.SetActive(false);
+    }
+
+    public void CancelInstructions()
+    {
+        InstructionsUI.SetActive(false);
+        MenuUI.SetActive(true);
     }
 }
 

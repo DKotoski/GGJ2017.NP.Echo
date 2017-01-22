@@ -53,6 +53,7 @@
      <Compile Include="Assets\Scripts\ObstacleBehavior.cs" />
      <Compile Include="Assets\Scripts\ParticleBehavior.cs" />
      <Compile Include="Assets\Scripts\PlayerBehavior.cs" />
+     <Compile Include="Assets\Scripts\SoundController.cs" />
      <Compile Include="Assets\Scripts\WaveAnimationController.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>E:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

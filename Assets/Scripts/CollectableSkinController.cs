@@ -6,6 +6,19 @@ public class CollectableSkinController : MonoBehaviour
 {
 
     public CollectableColor animationColor;
+    public ObstacleTypeEnum collectableType
+    {
+        get
+        {
+            switch (animationColor)
+            {
+                case CollectableColor.Red: return ObstacleTypeEnum.Red;
+                case CollectableColor.Blue: return ObstacleTypeEnum.Blue;
+                case CollectableColor.Yellow: return ObstacleTypeEnum.Yellow;
+                default: return ObstacleTypeEnum.Black;
+            }
+        }
+    }
 
     // Use this for initialization
     void Start()

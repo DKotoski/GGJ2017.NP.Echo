@@ -47,9 +47,11 @@ public class ObstacleBehavior : MonoBehaviour
 
     public void Destroy()
     {
-        if (WillBeDestroyed) { 
-            GetComponent<Rigidbody>().useGravity = true;
-            GameObject.Destroy(gameObject, 5); }
+        if (WillBeDestroyed)
+        {
+            //GetComponent<Rigidbody>().useGravity = true;
+            GameObject.Destroy(gameObject);
+        }
     }
 
     /// <summary>
@@ -61,8 +63,6 @@ public class ObstacleBehavior : MonoBehaviour
         ParticleSystem part = ParticleSystem.GetComponent<ParticleSystem>();
         List<ParticleCollisionEvent> collisionEvents = new List<ParticleCollisionEvent>();
         int numCollisionEvents = part.GetCollisionEvents(other, collisionEvents);
-        Debug.Log(numCollisionEvents);
-        Debug.Log(collisionEvents.Count);
         if (collisionEvents.Count > 50) Destroy();
     }
 

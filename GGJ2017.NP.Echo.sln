@@ -1,7 +1,7 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2015
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GGJ2017.NP.Echo", "GGJ2017.NP.Echo.csproj", "{BF7155DE-9692-2999-F138-041150FC34C5}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{FCE98B6F-4BA4-651A-38B5-44D66AB11A85}") = "GGJ2017.NP.Echo", "Assembly-CSharp.csproj", "{D7D68DC1-D7DD-6709-9540-1A859BC0DBF3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,12 +9,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BF7155DE-9692-2999-F138-041150FC34C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BF7155DE-9692-2999-F138-041150FC34C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BF7155DE-9692-2999-F138-041150FC34C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BF7155DE-9692-2999-F138-041150FC34C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7D68DC1-D7DD-6709-9540-1A859BC0DBF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7D68DC1-D7DD-6709-9540-1A859BC0DBF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7D68DC1-D7DD-6709-9540-1A859BC0DBF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7D68DC1-D7DD-6709-9540-1A859BC0DBF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
 	EndGlobalSection
 EndGlobal
